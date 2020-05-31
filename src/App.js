@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react"; // useEffect
+import "./App.css";
+import Alert from "./components/Alert";
+import TodoList from "./components/TodoList";
+import uuid from "uuid/dist/v4";
+
+const initialTodos = [
+  { id: uuid(), todo: "to do 1" },
+  { id: uuid(), todo: "to do 2" },
+  { id: uuid(), todo: "to do 3" },
+];
 
 function App() {
+  // **************** state values **************************
+  // all todos, add todos   , setTodos
+  const [todos] = useState(initialTodos);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Alert />
+
+      <h1>Hello World</h1>
+
+      <TodoList todos={todos} />
+
+      <p>This is dummy text....</p>
     </div>
   );
 }
