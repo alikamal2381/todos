@@ -18,12 +18,30 @@ function App() {
   // **************** state values **************************
   // all todos, add todos   , setTodos
   const [todos, setTodos] = useState(initialTodos);
+
+  // alert
+  const [alert, setAlert] = useState({ show: false });
+
   // **************** useEffect **************************
   useEffect(() => {
     console.log("we called useEffect");
     //localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
   // **************** functionality **************************
+
+  const handleAlert = ({ type, text }) => {
+    setAlert({ show: true, type, text });
+    setTimeout(() => {
+      setAlert({ show: false });
+    }, 3000);
+  };
+
+  // clear all items
+  const clearItems = () => {
+    //console.log("cleared all items");
+    setTodos([]);
+    handleAlert({ type: "danger", text: "all item deleted" });
+  };
 
   return (
     <div className="container">
@@ -33,7 +51,7 @@ function App() {
         <div className="col-10 mx-auto col-md-8 mt-4">
           <h3 className="text-capitalize text-center">todo input</h3>
           <TodoInput />
-          <TodoList a={todos} />
+          <TodoList a={todos} clearItems={clearItems.bind(this)} />
         </div>
       </div>
     </div>
