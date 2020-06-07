@@ -3,29 +3,32 @@ import TodoItem from "./TodoItem";
 
 class TodoList extends Component {
   render() {
-    const x = this.props.a;
-
-    const y = this.props.clearItems;
-
-    console.log(y);
-
     return (
       <ul className="list-group my-5">
         <h3 className="text-capitalize text-center">to do list</h3>
-        {x.map((todo) => {
-          return <TodoItem key={todo.id} todo={todo} />;
+        {this.props.todo.map((x) => {
+          return (
+            <TodoItem
+              key={x.id}
+              todo={x}
+              handleEdit={this.props.handleEdit}
+              handleDelete={this.props.handleDelete}
+            />
+          );
         })}
 
-        <button
-          type="button"
-          className="btn btn-danger btn-block text-capitalize mt-5"
-          onClick={y}
-        >
-          clear items
-        </button>
+        {this.props.todo.length > 0 && (
+          <button
+            type="button"
+            className="btn btn-danger btn-block text-capitalize mt-5"
+            onClick={this.props.clearItems}
+          >
+            clear items
+          </button>
+        )}
       </ul>
     );
   }
 }
-//onClick={this.props.clearItems}
+
 export default TodoList;
