@@ -5,18 +5,7 @@ import TodoList from "./components/TodoList";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import uuid from "uuid/dist/v4";
-
-/*
-//localStorage.getItem("item name");
-//localStorage.setItem("item name");
-const initialTodos = [
-  { id: uuid(), title: "to do 1", isCompleted: false },
-  { id: uuid(), title: "to do 2", isCompleted: false },
-  { id: uuid(), title: "to do 3", isCompleted: false },
-  { id: uuid(), title: "to do 4", isCompleted: false },
-  { id: uuid(), title: "to do 5", isCompleted: false },
-];
-*/
+import db from "./firebase";
 
 const initialTodos = localStorage.getItem("todos")
   ? JSON.parse(localStorage.getItem("todos"))
@@ -37,10 +26,20 @@ function App() {
   // edit item
   const [id, setId] = useState(0);
   // **************** useEffect **************************
+  /*  // **** this use effect is use for local storage
   useEffect(() => {
     console.log("we called useEffect");
     localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+  }, [todos]); */
+
+  // **** this use effect is use for firebase
+  useEffect(() => {
+    console.log(snapshot.docs.map((doc) => doc.data().todo));
+    db.collection("todo-list").onSnapshot((snapshot) => {
+      setTodos(snapshot.docs.map((doc) => doc.data().todo));
+    });
+  }, []);
+
   // **************** functionality **************************
   const handleTitle = (e) => {
     //console.log(`title ${e.target.value}`);
