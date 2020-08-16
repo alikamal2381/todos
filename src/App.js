@@ -5,7 +5,7 @@ import TodoList from "./components/TodoList";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import uuid from "uuid/dist/v4";
-import db from "./firebase";
+//import firebase from "./util/firebase.js";
 
 const initialTodos = localStorage.getItem("todos")
   ? JSON.parse(localStorage.getItem("todos"))
@@ -26,19 +26,11 @@ function App() {
   // edit item
   const [id, setId] = useState(0);
   // **************** useEffect **************************
-  /*  // **** this use effect is use for local storage
+  // **** this use effect is use for local storage
   useEffect(() => {
     console.log("we called useEffect");
     localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]); */
-
-  // **** this use effect is use for firebase
-  useEffect(() => {
-    console.log(snapshot.docs.map((doc) => doc.data().todo));
-    db.collection("todo-list").onSnapshot((snapshot) => {
-      setTodos(snapshot.docs.map((doc) => doc.data().todo));
-    });
-  }, []);
+  }, [todos]);
 
   // **************** functionality **************************
   const handleTitle = (e) => {
